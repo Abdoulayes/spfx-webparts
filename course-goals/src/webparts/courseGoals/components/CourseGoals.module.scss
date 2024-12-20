@@ -1,0 +1,108 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  max-width: 100%;
+  margin: 24px auto;
+  background: #333;
+  padding: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(3, 214, 35, 0.6);
+  color: #f1f1f1;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+  text-align: center;
+  font-size: 1rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  
+  img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+}
+
+/* Form */
+.newGoalForm {
+  width: 100%;
+
+  button {
+    display: block;
+    margin: 0 auto;
+    min-width: 120px;
+    padding: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    color: #333;
+    border: 1px solid #f1f1f1;
+    background-color: #f1f1f1;
+
+    &:hover {
+      color: #f1f1f1;
+      background-color: #333;
+    }
+  }
+}
+.errorMsg {
+      font-size: 1rem;
+      color: crimson;
+      text-align: center;
+      margin: 8px auto;
+    }
+.inputGroup {
+  margin: 16px auto;
+
+  label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 4px;
+  }
+}
+
+/* Goal list */
+.goalList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  list-style-type: none;
+  margin: 24px auto 0;
+}
+.goalListItem {
+  background-color: #a1a1a1;
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointe;
+    font-size: 1rem;
+    font-weight: bold;
+
+    &:hover {
+      color: #333;
+    }
+  }
+}

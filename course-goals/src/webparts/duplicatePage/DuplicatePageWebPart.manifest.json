@@ -1,0 +1,21 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "bd1c46a9-5c4d-4c10-bffc-a7590472f8a1",
+  "alias": "DuplicatePageWebPart",
+  "componentType": "WebPart",
+  "version": "*",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart", "TeamsPersonalApp", "TeamsTab", "SharePointFullPage"],
+  "supportsThemeVariants": true,
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", 
+    "group": { "default": "Advanced" },
+    "title": { "default": "duplicate-page" },
+    "description": { "default": "duplicate-page description" },
+    "officeFabricIconFontName": "Page",
+    "properties": {
+      "description": "duplicate-page"
+    }
+  }]
+}

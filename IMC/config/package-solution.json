@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "calcul-imc-client-side-solution",
+    "id": "628fdb63-8eb9-43ab-a095-def4164212ee",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.18.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "Calcul IMC description"
+      },
+      "longDescription": {
+        "default": "Calcul IMC description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "calcul-imc Feature",
+        "description": "The feature that activates elements of the calcul-imc solution.",
+        "id": "28204853-a755-414f-a820-a21ddb271fe3",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/calcul-imc.sppkg"
+  }
+}

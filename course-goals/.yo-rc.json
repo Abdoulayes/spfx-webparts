@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": false,
+    "nodeVersion": "18.18.0",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.12.0"
+    },
+    "version": "1.18.0",
+    "libraryName": "course-goals",
+    "libraryId": "4a636323-59cb-4cd5-a9a9-ba6ea2fff89f",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "course-goals",
+    "solutionShortDescription": "course-goals description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

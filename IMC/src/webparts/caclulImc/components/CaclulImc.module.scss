@@ -1,0 +1,100 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.main {
+    background: linear-gradient(to left, #e3f259, lightblue);
+      padding: clamp(20px, 5vw, 50px) 10px 10px;
+}
+
+.container {
+  max-width: 750px;
+  background: #f1f1f1;
+  border-radius: 4px;
+  box-shadow: 0 0 10px gray;
+  padding: 24px;
+}
+h1 {
+  font-size: 3rem;
+  font-weight: 200;
+  text-align: center;
+
+  span {
+    font-weight: bold;
+  }
+}
+.inputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.inputGroup {
+  label {
+    display: block;
+    font-size: 1.2rem;
+    margin: 0 0 8px 4px;
+  }
+
+  input {
+    min-width: 300px;
+    padding: 8px;
+    font-size: 1.2rem;
+    color: #333;
+    border: none;
+    box-shadow: 0 0 10px gray;
+  }
+}
+button {
+  display: block;
+  margin: 24px auto;
+  border: 1px solid orange;
+  background-color: orange;
+  color: #333;
+  padding: 8px;
+  min-width: 150px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover, 
+  &:active {
+    color: orange;
+    background-color: #333;
+  }
+}
+.infos {
+  text-align: center;
+  
+  .imcResult {
+    font-size: 2.5rem;
+  }
+  .imcInfo {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 900px) {
+  .inputContainer {
+    flex-direction: column;
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .inputGroup {
+    width: 100%;
+
+    input {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+  h1 {
+    font-size: 2rem;
+  }
+}

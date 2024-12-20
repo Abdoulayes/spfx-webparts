@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "18.18.0",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.12.0"
+    },
+    "version": "1.18.0",
+    "libraryName": "calcul-imc",
+    "libraryId": "628fdb63-8eb9-43ab-a095-def4164212ee",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "Calcul IMC",
+    "solutionShortDescription": "Calcul IMC description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

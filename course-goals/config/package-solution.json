@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "course-goals-client-side-solution",
+    "id": "4a636323-59cb-4cd5-a9a9-ba6ea2fff89f",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.18.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "course-goals description"
+      },
+      "longDescription": {
+        "default": "course-goals description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "course-goals Feature",
+        "description": "The feature that activates elements of the course-goals solution.",
+        "id": "f079101d-c5ec-4757-ac55-bc3b61c0654e",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/course-goals.sppkg"
+  }
+}

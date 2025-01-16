@@ -13,31 +13,33 @@ const Carousel: FC<ICarouselProps> = (props) => {
   const {
     spContext,
     items,
+    wpTitle,
     itemPerPage,
     itemToSlide,
-    wpTitle,
     autoPlaySpeed,
     showTitle,
+    showCarousel,
   } = props;
   const carouselService = new CarouselService(spContext);
   const [slideInfos, setSlideInfos] = useState<ISliderInfos[]>([]);
+  const [filteredSlids, setFilteredSlids] = useState<ISliderInfos[]>([]);
+  const [filteredValue, setFilteredValue] = useState<string>('All');
 
-  useEffect(() => {
-    carouselService
-      .getPagesBis()
-      .then((pagesProp) => {
-        console.log("Pages Props: ", pagesProp);
-      })
-      .catch((error) => {
-        Log.error("", error);
-      });
-  }, [items, itemPerPage, itemToSlide]);
+
+  const [metaDataList, setMetaDataList] = useState<string[]>([]);
 
   useEffect(() => {
     carouselService
       .getPages(items)
       .then((pages) => {
+        const managedMetadataList: string[] = [filteredValue];
         pages.forEach((page) => {
+          // On recupère la liste des métadonnées à utiliser pour les filtres
+          page.Departement.forEach((val) => {
+            if (managedMetadataList.indexOf(val.Label) === -1) {
+              managedMetadataList.push(val.Label);
+            }
+          });
           // Get current page likes
           carouselService
             .getPageLikes(parseInt(page.Id))
@@ -46,11 +48,19 @@ const Carousel: FC<ICarouselProps> = (props) => {
               carouselService
                 .getPageComments(parseInt(page.Id))
                 .then((comment) => {
+                  const commentValue = comment ? comment.length.toString() : "";
+
+                  const pageInfo: ISliderInfos = {
+                    ...page,
+                    ...likes,
+                    Comment: commentValue,
+                  };
+
                   setSlideInfos((sInfos) => {
-                    return [
-                      ...sInfos,
-                      { ...page, ...likes, Comment: comment.length },
-                    ];
+                    return [...sInfos, pageInfo];
+                  });
+                  setFilteredSlids((preVal) => {
+                    return [...preVal, pageInfo];
                   });
                 })
                 .catch((error) => {
@@ -61,28 +71,80 @@ const Carousel: FC<ICarouselProps> = (props) => {
               Log.error("", error);
             });
         });
+
+        setMetaDataList((preVal) => {
+          return [...managedMetadataList];
+        });
+        console.log("Contenu du tableau: ", managedMetadataList);
       })
       .catch((error) => {
         Log.error("", error);
       });
   }, []);
 
+  const handleFilterClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    item: string
+  ): void => {
+
+    // On recupère la valeur du filtre
+    setFilteredValue(item);
+
+    if (item === "All") {
+      setFilteredSlids(slideInfos);
+    } else {
+      const filtable: ISliderInfos[] = [];
+      slideInfos.forEach((page) => {
+        page.Departement.forEach((depInf) => {
+          if (depInf.Label === item) {
+            filtable.push(page);
+            return;
+          }
+        });
+      });
+
+      setFilteredSlids(filtable);
+    }
+  };
   return (
     <div>
       {showTitle && <h2 className="wp-title">{wpTitle}</h2>}
-      <MultiCarousel
-        itemPerPage={itemPerPage}
-        itemToSlide={itemToSlide}
-        autoPlaySpeed={autoPlaySpeed}
-      >
-        {slideInfos.map((slideInf) => (
-          <div key={slideInf.Id} className={styles.carouselSlideContainer}>
-            <a href={slideInf.FileRef} target="_blanc">
-              <Slide slideInfos={slideInf} />
-            </a>
-          </div>
+      <div className={styles.btnList}>
+        {metaDataList.map((item) => (
+          <button
+            key={item}
+            className={`${styles.btn} ${filteredValue === item ? styles.btnActive : '' }`}
+            onClick={(event) => handleFilterClick(event, item)}
+          >
+            {item}
+          </button>
         ))}
-      </MultiCarousel>
+      </div>
+      {showCarousel ? (
+        <MultiCarousel
+          itemPerPage={itemPerPage}
+          itemToSlide={itemToSlide}
+          autoPlaySpeed={autoPlaySpeed}
+        >
+          {slideInfos.map((slideInf) => (
+            <div key={slideInf.Id} className={styles.carouselSlideContainer}>
+              <a href={slideInf.FileRef} target="_blanc">
+                <Slide slideInfos={slideInf} />
+              </a>
+            </div>
+          ))}
+        </MultiCarousel>
+      ) : (
+        <div className={styles.wrapper}>
+          {filteredSlids.map((item) => (
+            <div key={item.Id}>
+              <a href={item.FileRef} target="_blanc">
+                <Slide slideInfos={item} />
+              </a>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

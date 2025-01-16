@@ -4,10 +4,15 @@ import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 // import { Log } from "@microsoft/sp-core-library";
 
 export class CarouselService {
-  constructor(private spContext: WebPartContext) {}
+  sitePageListTitle: string; 
+  constructor(private spContext: WebPartContext) {
+    if (this.spContext.pageContext.list) {
+      this.sitePageListTitle = this.spContext.pageContext.list?.title;
+    }
+  }
 
   public async getPageLikes(itemId: number): Promise<IPageInfos> {
-    const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('Site Pages')/items(${itemId})/LikedByInformation?$expand=likedby`;
+    const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('${this.sitePageListTitle}')/items(${itemId})/LikedByInformation?$expand=likedby`;
 
     const response: SPHttpClientResponse =
       await this.spContext.spHttpClient.get(
@@ -20,7 +25,7 @@ export class CarouselService {
   }
 
   public async getPageComments(itemId: number): Promise<IComment[]> {
-    const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('Site Pages')/items(${itemId})/Comments`; //?$expand=likedby`;
+    const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('${this.sitePageListTitle})/items(${itemId})/Comments`; //?$expand=likedby`;
 
     const response: SPHttpClientResponse =
       await this.spContext.spHttpClient.get(
@@ -61,12 +66,11 @@ export class CarouselService {
   // }
 
   public async getPages(itemsToRequest: string): Promise<IPages[]> {
-    const sitePagesTitle = this.spContext.pageContext.list?.title;
     const pageContentType = 'Site Page';
     const selectQuery =
       "$select=Id,Title,LikesCount,FileRef,FileLeafRef,Created,Description,BannerImageUrl,Departement";
     const filterQuery = `$filter=ContentType eq '${pageContentType}'`;
-    const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('${sitePagesTitle}')/items?${selectQuery}&$top=${itemsToRequest}&${filterQuery}`;
+    const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('${this.sitePageListTitle}')/items?${selectQuery}&$top=${itemsToRequest}&${filterQuery}`;
 
     const response: SPHttpClientResponse =
       await this.spContext.spHttpClient.get(
@@ -79,11 +83,10 @@ export class CarouselService {
   }
 
   public async getPagesBis(): Promise<IPageProps[]> {
-    const sitePagesTitle = this.spContext.pageContext.list?.title;
     const selectQuery =
       "$select=Id,Title,LikesCount,FileRef,FileLeafRef,Created,Description,BannerImageUrl,Departement";
     const filterQuery = `$filter=ContentType eq 'Site Page'`;
-    const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('${sitePagesTitle}')/items?${selectQuery}&$top=10&${filterQuery}`;
+    const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('${this.sitePageListTitle}')/items?${selectQuery}&$top=10&${filterQuery}`;
 
     const response: SPHttpClientResponse =
       await this.spContext.spHttpClient.get(

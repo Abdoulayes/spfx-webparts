@@ -12,4 +12,5 @@ export interface ICarouselProps {
   itemToSlide: string;
   autoPlaySpeed: string;
   showTitle: boolean;
+  showCarousel: boolean;
 }

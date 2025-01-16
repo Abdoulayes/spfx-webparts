@@ -30,7 +30,7 @@ export interface IComment {
   likeCount: string;
 } 
 export interface ISliderInfos extends IPages, IPageInfos {
-  Comment: number;
+  Comment: string;
 }
 
 export interface IPageProps {

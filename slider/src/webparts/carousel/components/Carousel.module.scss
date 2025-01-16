@@ -120,3 +120,37 @@
     }
   }
 }
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  margin-top: 30px;
+}
+.btnList {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  
+  .btn {
+    min-width: 120px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #636260;
+    background-color: transparent;
+    margin-right: 8px;
+    user-select: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+
+    &:hover, 
+    &:active {
+      background-color: lightgray;
+      color: #333;
+    }
+  }
+  .btnActive {
+    border-bottom: 2px solid orange;
+    background-color: #dfdfdf;
+    border-radius: 3px;
+  }
+}

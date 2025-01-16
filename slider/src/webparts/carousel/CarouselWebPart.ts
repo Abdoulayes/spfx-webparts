@@ -21,6 +21,7 @@ export interface ICarouselWebPartProps {
   itemToSlide: string;
   autoPlaySpeed: string;
   showTitle: boolean;
+  showCarousel: boolean;
 }
 
 export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebPartProps> {
@@ -42,7 +43,8 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
         itemPerPage: this.properties.itemPerPage,
         itemToSlide: this.properties.itemToSlide,
         autoPlaySpeed: this.properties.autoPlaySpeed,
-        showTitle: this.properties.showTitle
+        showTitle: this.properties.showTitle,
+        showCarousel: this.properties.showCarousel,
       }
     );
 
@@ -121,11 +123,17 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
             {
               groupName: strings.BasicGroupName,
               groupFields: [
+                PropertyPaneToggle("showCarousel", {
+                  label: "Show Carousel or Grid",
+                  checked: true,
+                  onText: "Show Carousel",
+                  offText: "Show Grid",
+                }),
                 PropertyPaneToggle("showTitle", {
                   label: "Show or hidden title",
                   checked: true,
-                  onText: 'Hidden title',
-                  offText: 'Show title'
+                  onText: "Hidden title",
+                  offText: "Show title",
                 }),
                 PropertyPaneTextField("wpTitle", {
                   label: strings.DescriptionFieldLabel,

@@ -11,6 +11,7 @@ declare interface ICarouselWebPartStrings {
   AppOfficeEnvironment: string;
   AppOutlookEnvironment: string;
   UnknownEnvironment: string;
+  AllNews: string;
 }
 
 declare module 'CarouselWebPartStrings' {

@@ -19,6 +19,7 @@
   background: rgb(255, 255, 255);
   max-width: 280px;
   margin: 10px 30px 10px 0px;
+  margin: 10px 0px;
   border: 1px solid rgb(214, 214,214);
 
   .sliderItem {
@@ -120,9 +121,11 @@
     }
   }
 }
+
+/* Grid list pagination style */
 .wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 18rem));
   margin-top: 30px;
 }
 .btnList {
@@ -154,21 +157,29 @@
     border-radius: 3px;
   }
 }
+
 .paginate {
   list-style-type: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.5rem;
 
   li {
-    width: 2rem;
-    height: 2rem;
-    background-color: lightgreen;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+
+    &:hover, 
+    &:active {
+      background-color: #dfdfdf;
+    }
+    a {
+      padding: 0.5rem;
+    }
   }
 }

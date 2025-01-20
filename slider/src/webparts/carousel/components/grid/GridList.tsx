@@ -4,6 +4,7 @@ import styles from "../Carousel.module.scss";
 import { ISliderInfos } from "../../../../models";
 import Slide from "../slide/Slide";
 import ReactPaginate from "react-paginate";
+import './style.css';
 
 interface IGridListProps {
   items: ISliderInfos[];
@@ -29,6 +30,7 @@ const GridList: FC<IGridListProps> = (props) => {
   const handlePageClick = (event: any): void => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
 
+    console.log(event.target)
     setItemOffset(newOffset);
   };
   return (

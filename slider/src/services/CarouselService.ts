@@ -68,7 +68,7 @@ export class CarouselService {
   public async getPages(itemsToRequest: string): Promise<IPages[]> {
     const pageContentType = 'Site Page';
     const selectQuery =
-      "$select=Id,Title,LikesCount,FileRef,FileLeafRef,Created,Description,BannerImageUrl,Departement";
+      "$select=Id,Title,LikesCount,FileRef,FileLeafRef,Created,Description,BannerImageUrl,AVEMTheme";
     const filterQuery = `$filter=ContentType eq '${pageContentType}'`;
     const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('${this.sitePageListTitle}')/items?${selectQuery}&$top=${itemsToRequest}&${filterQuery}`;
 
@@ -84,7 +84,7 @@ export class CarouselService {
 
   public async getPagesBis(): Promise<IPageProps[]> {
     const selectQuery =
-      "$select=Id,Title,LikesCount,FileRef,FileLeafRef,Created,Description,BannerImageUrl,Departement";
+      "$select=Id,Title,LikesCount,FileRef,FileLeafRef,Created,Description,BannerImageUrl,AVEMTheme";
     const filterQuery = `$filter=ContentType eq 'Site Page'`;
     const url = `${this.spContext.pageContext.web.absoluteUrl}/_api/web/lists/getByTitle('${this.sitePageListTitle}')/items?${selectQuery}&$top=10&${filterQuery}`;
 

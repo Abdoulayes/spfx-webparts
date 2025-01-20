@@ -27,11 +27,11 @@ const Slide: FC<ISlideProps> = (props) => {
           </div>
           <div className={styles.sliderTags}>
             <div className={styles.tagList}>
-              {slideInfos.Departement &&
-                slideInfos.Departement.map((dep) => (
-                  <span key={dep.TermGuid} className={styles.tagSlot}>
+              {slideInfos.AVEMTheme &&
+                slideInfos.AVEMTheme.map((theme) => (
+                  <span key={theme.TermGuid} className={styles.tagSlot}>
                     {" "}
-                    {dep.Label}{" "}
+                    {theme.Label}{" "}
                   </span>
                 ))}
             </div>

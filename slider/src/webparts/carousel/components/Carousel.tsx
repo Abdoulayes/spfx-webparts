@@ -33,7 +33,7 @@ const Carousel: FC<ICarouselProps> = (props) => {
         const managedMetadataList: string[] = [filteredValue];
         pages.forEach((page) => {
           // On recupère la liste des métadonnées à utiliser pour les filtres
-          page.Departement.forEach((val) => {
+          page.AVEMTheme.forEach((val) => {
             if (managedMetadataList.indexOf(val.Label) === -1) {
               managedMetadataList.push(val.Label);
             }
@@ -70,10 +70,7 @@ const Carousel: FC<ICarouselProps> = (props) => {
             });
         });
 
-        setMetaDataList((preVal) => {
-          return [...managedMetadataList];
-        });
-        console.log("Contenu du tableau: ", managedMetadataList);
+        setMetaDataList(managedMetadataList);
       })
       .catch((error) => {
         Log.error("", error);
@@ -92,7 +89,7 @@ const Carousel: FC<ICarouselProps> = (props) => {
     } else {
       const filtable: ISliderInfos[] = [];
       slideInfos.forEach((page) => {
-        page.Departement.forEach((depInf) => {
+        page.AVEMTheme.forEach((depInf) => {
           if (depInf.Label === item) {
             filtable.push(page);
             return;

@@ -10,7 +10,7 @@ export interface IPages {
     Url: string;
     Description: string;
   };
-  Departement: [
+  AVEMTheme: [
     {
       Label: string;
       TermGuid: string;

@@ -13,6 +13,6 @@ define([], function() {
     "AppOutlookEnvironment": "The app is running in Outlook",
     "UnknownEnvironment": "The app is running in an unknown environment",
 
-    "AllNews": "All News"
+    "AllNews": "Toutes les actualités"
   }
 });

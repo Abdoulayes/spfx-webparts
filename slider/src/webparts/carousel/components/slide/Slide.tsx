@@ -4,11 +4,6 @@ import { ISlideProps } from "./ISlideProps";
 import styles from "../Carousel.module.scss";
 import { Icon } from "@fluentui/react/lib/Icon";
 
-// const CommentIcon = (): IIconProps => (
-//   <Icon iconName="CommentSolid" />
-// );
-// const LikeIcon = () => <Icon iconName="LikeSolid" />;
-
 
 const Slide: FC<ISlideProps> = (props) => {
   const { slideInfos } = props;

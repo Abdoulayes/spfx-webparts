@@ -12,7 +12,7 @@
     "test": "gulp test"
   },
   "dependencies": {
-    "@fluentui/react": "^8.122.1",
+    "@fluentui/react": "^8.122.7",
     "@microsoft/sp-component-base": "1.18.0",
     "@microsoft/sp-core-library": "1.18.0",
     "@microsoft/sp-lodash-subset": "1.18.0",
@@ -22,6 +22,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-multi-carousel": "^2.8.5",
+    "react-paginate": "^8.2.0",
     "tslib": "2.3.1"
   },
   "devDependencies": {

@@ -1,18 +1,17 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import { Version } from "@microsoft/sp-core-library";
 import {
   type IPropertyPaneConfiguration,
   PropertyPaneSlider,
   PropertyPaneTextField,
-  PropertyPaneToggle
-} from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
-
-import * as strings from 'CarouselWebPartStrings';
-import Carousel from './components/Carousel';
-import { ICarouselProps } from './components/ICarouselProps';
+  PropertyPaneToggle,
+} from "@microsoft/sp-property-pane";
+import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
+import { IReadonlyTheme } from "@microsoft/sp-component-base";
+import * as strings from "CarouselWebPartStrings";
+import Carousel from "./components/Carousel";
+import { ICarouselProps } from "./components/ICarouselProps";
 
 export interface ICarouselWebPartProps {
   wpTitle: string;
@@ -25,9 +24,8 @@ export interface ICarouselWebPartProps {
 }
 
 export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebPartProps> {
-
   private _isDarkTheme: boolean = false;
-  private _environmentMessage: string = '';
+  private _environmentMessage: string = "";
 
   public render(): void {
     const element: React.ReactElement<ICarouselProps> = React.createElement(
@@ -52,28 +50,34 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
   }
 
   protected onInit(): Promise<void> {
-    return this._getEnvironmentMessage().then(message => {
+    return this._getEnvironmentMessage().then((message) => {
       this._environmentMessage = message;
     });
   }
 
-
-
   private _getEnvironmentMessage(): Promise<string> {
-    if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook
-      return this.context.sdks.microsoftTeams.teamsJs.app.getContext()
-        .then(context => {
-          let environmentMessage: string = '';
+    if (!!this.context.sdks.microsoftTeams) {
+      // running in Teams, office.com or Outlook
+      return this.context.sdks.microsoftTeams.teamsJs.app
+        .getContext()
+        .then((context) => {
+          let environmentMessage: string = "";
           switch (context.app.host.name) {
-            case 'Office': // running in Office
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentOffice : strings.AppOfficeEnvironment;
+            case "Office": // running in Office
+              environmentMessage = this.context.isServedFromLocalhost
+                ? strings.AppLocalEnvironmentOffice
+                : strings.AppOfficeEnvironment;
               break;
-            case 'Outlook': // running in Outlook
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentOutlook : strings.AppOutlookEnvironment;
+            case "Outlook": // running in Outlook
+              environmentMessage = this.context.isServedFromLocalhost
+                ? strings.AppLocalEnvironmentOutlook
+                : strings.AppOutlookEnvironment;
               break;
-            case 'Teams': // running in Teams
-            case 'TeamsModern':
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentTeams : strings.AppTeamsTabEnvironment;
+            case "Teams": // running in Teams
+            case "TeamsModern":
+              environmentMessage = this.context.isServedFromLocalhost
+                ? strings.AppLocalEnvironmentTeams
+                : strings.AppTeamsTabEnvironment;
               break;
             default:
               environmentMessage = strings.UnknownEnvironment;
@@ -83,7 +87,11 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
         });
     }
 
-    return Promise.resolve(this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentSharePoint : strings.AppSharePointEnvironment);
+    return Promise.resolve(
+      this.context.isServedFromLocalhost
+        ? strings.AppLocalEnvironmentSharePoint
+        : strings.AppSharePointEnvironment
+    );
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -92,16 +100,19 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
     }
 
     this._isDarkTheme = !!currentTheme.isInverted;
-    const {
-      semanticColors
-    } = currentTheme;
+    const { semanticColors } = currentTheme;
 
     if (semanticColors) {
-      this.domElement.style.setProperty('--bodyText', semanticColors.bodyText || null);
-      this.domElement.style.setProperty('--link', semanticColors.link || null);
-      this.domElement.style.setProperty('--linkHovered', semanticColors.linkHovered || null);
+      this.domElement.style.setProperty(
+        "--bodyText",
+        semanticColors.bodyText || null
+      );
+      this.domElement.style.setProperty("--link", semanticColors.link || null);
+      this.domElement.style.setProperty(
+        "--linkHovered",
+        semanticColors.linkHovered || null
+      );
     }
-
   }
 
   protected onDispose(): void {
@@ -109,7 +120,7 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
   }
 
   protected get dataVersion(): Version {
-    return Version.parse('1.0');
+    return Version.parse("1.0");
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {

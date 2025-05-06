@@ -1,20 +1,33 @@
 import * as React from "react";
 import { FC } from "react";
 import { ISlideProps } from "./ISlideProps";
-import styles from "../Carousel.module.scss";
+import styles from "../GenericSlider.module.scss";
 import { Icon } from "@fluentui/react/lib/Icon";
 
-
 const Slide: FC<ISlideProps> = (props) => {
-  const { slideInfos } = props;
+  const { slideInfos, itemTags } = props;
   // const imageUrl = (slideInfos.BannerImageUrl && slideInfos.BannerImageUrl.Url) ? slideInfos.BannerImageUrl.Url : "";
-  const imageUrl = (slideInfos.BannerImageUrl && typeof slideInfos.BannerImageUrl === 'object' && 'Url' in slideInfos.BannerImageUrl) ? slideInfos.BannerImageUrl.Url : "";
+  const imageUrl =
+    slideInfos.BannerImageUrl &&
+    typeof slideInfos.BannerImageUrl === "object" &&
+    "Url" in slideInfos.BannerImageUrl
+      ? slideInfos.BannerImageUrl.Url
+      : "";
 
   // const imageDesc = (slideInfos.BannerImageUrl && slideInfos.BannerImageUrl.Description) ? slideInfos.BannerImageUrl.Description : "";
-  const imageDesc = (slideInfos.BannerImageUrl && typeof slideInfos.BannerImageUrl === 'object' && 'Description' in slideInfos.BannerImageUrl) ? slideInfos.BannerImageUrl.Description : "";
+  const imageDesc =
+    slideInfos.BannerImageUrl &&
+    typeof slideInfos.BannerImageUrl === "object" &&
+    "Description" in slideInfos.BannerImageUrl
+      ? slideInfos.BannerImageUrl.Description
+      : "";
 
   // const createdDate = new Date(slideInfos.Created).toLocaleDateString();
-  const createdDate = (typeof slideInfos.Created === 'string' || typeof slideInfos.Created === 'number') ? new Date(slideInfos.Created).toLocaleDateString() : '';
+  const createdDate =
+    typeof slideInfos.Created === "string" ||
+    typeof slideInfos.Created === "number"
+      ? new Date(slideInfos.Created).toLocaleDateString()
+      : "";
 
   return (
     <div className={styles.slider}>
@@ -33,10 +46,14 @@ const Slide: FC<ISlideProps> = (props) => {
           </div>
           <div className={styles.sliderTags}>
             <div className={styles.tagList}>
-              {Array.isArray(slideInfos.AVEMTheme) &&
-                slideInfos.AVEMTheme.map((theme: { TermGuid: string; Label: string }) => (
-                  <span key={theme.TermGuid} className={styles.tagSlot}>{theme.Label}</span>
-                ))}
+              {Array.isArray(slideInfos[itemTags]) &&
+                slideInfos[itemTags].map(
+                  (theme: { TermGuid: string; Label: string }) => (
+                    <span key={theme.TermGuid} className={styles.tagSlot}>
+                      {theme.Label}
+                    </span>
+                  )
+                )}
             </div>
           </div>
           <div className={styles.sliderDetails}>

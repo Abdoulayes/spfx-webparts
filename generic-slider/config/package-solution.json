@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "generic-slider-client-side-solution",
+    "id": "94d59490-91c0-4378-b024-fada82f61112",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.18.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "generic-slider description"
+      },
+      "longDescription": {
+        "default": "generic-slider description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "generic-slider Feature",
+        "description": "The feature that activates elements of the generic-slider solution.",
+        "id": "d21d5183-0cbc-4b6a-a986-c7fd3b421999",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/generic-slider.sppkg"
+  }
+}

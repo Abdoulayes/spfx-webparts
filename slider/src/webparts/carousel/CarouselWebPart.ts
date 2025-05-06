@@ -5,6 +5,7 @@ import {
   type IPropertyPaneConfiguration,
   PropertyPaneSlider,
   PropertyPaneTextField,
+  IPropertyPaneTextFieldProps,
   PropertyPaneToggle,
 } from "@microsoft/sp-property-pane";
 import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
@@ -21,6 +22,7 @@ export interface ICarouselWebPartProps {
   autoPlaySpeed: string;
   showTitle: boolean;
   showCarousel: boolean;
+  managedPropertyField: string;
 }
 
 export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebPartProps> {
@@ -43,6 +45,9 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
         autoPlaySpeed: this.properties.autoPlaySpeed,
         showTitle: this.properties.showTitle,
         showCarousel: this.properties.showCarousel,
+        managedPropertyField: this.properties.managedPropertyField,
+        gridRows: "",
+        pageContentType: "",
       }
     );
 
@@ -123,16 +128,43 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
     return Version.parse("1.0");
   }
 
+  private checkTitle(value: string): string {
+    return value.length < 10 ? "Titre trop court" : "";
+  }
+
+  protected get disableReactivePropertyChanges(): boolean {
+    return true;
+  }
+  protected onAfterPropertyPaneChangesApplied(): void {
+    // Implement le code qui s'execute lorsqu'on modifie la propriété pour que la modification soit prise en compte 
+  }
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
         {
+        header: {
+          description: 'page One'
+          },
+          groups: []
+      },
+        {
           header: {
             description: strings.PropertyPaneDescription,
           },
+          displayGroupsAsAccordion: true,
           groups: [
             {
+              groupName: "groupe 1",
+              groupFields: [
+                PropertyPaneTextField("wpTitle", <IPropertyPaneTextFieldProps>{
+                  label: strings.DescriptionFieldLabel,
+                  onGetErrorMessage: this.checkTitle.bind(this),
+                }),
+              ],
+            },
+            {
               groupName: strings.BasicGroupName,
+              isCollapsed: true,
               groupFields: [
                 PropertyPaneToggle("showCarousel", {
                   label: "Show Carousel or Grid",
@@ -146,8 +178,12 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
                   onText: "Hidden title",
                   offText: "Show title",
                 }),
-                PropertyPaneTextField("wpTitle", {
+                PropertyPaneTextField("wpTitle", <IPropertyPaneTextFieldProps>{
                   label: strings.DescriptionFieldLabel,
+                  onGetErrorMessage: this.checkTitle.bind(this),
+                }),
+                PropertyPaneTextField("managedPropertyField", {
+                  label: strings.ManagedPropertyFieldLabel,
                 }),
               ],
             },

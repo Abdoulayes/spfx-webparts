@@ -1,5 +1,9 @@
-import { ISliderInfos } from "../../../../models";
+import {
+    IPageFields,
+    // ISliderInfos
+} from "../../../../models";
 
 export interface ISlideProps {
-    slideInfos: ISliderInfos;
+    // slideInfos: ISliderInfos;
+    slideInfos: IPageFields;
 }

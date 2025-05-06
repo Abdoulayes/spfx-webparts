@@ -3,7 +3,11 @@ import { FC, useEffect, useState } from "react";
 import { ICarouselProps } from "./ICarouselProps";
 import { CarouselService } from "../../../services/CarouselService";
 import { Log } from "@microsoft/sp-core-library";
-import { ISliderInfos } from "../../../models/IPages";
+import {
+  IPageFields,
+  // ISliderInfos,
+  RowFields,
+} from "../../../models/IPages";
 import MultiCarousel from "./slide/MultiCarousel";
 import "./style.css";
 // import styles from "./Carousel.module.scss";
@@ -19,57 +23,56 @@ const Carousel: FC<ICarouselProps> = (props) => {
     autoPlaySpeed,
     showTitle,
     showCarousel,
+    gridRows,
+    pageContentType,
   } = props;
   const carouselService = new CarouselService(spContext);
-  const [slideInfos, setSlideInfos] = useState<ISliderInfos[]>([]);
-  const [filteredSlids, setFilteredSlids] = useState<ISliderInfos[]>([]);
   const [filteredValue, setFilteredValue] = useState<string>("All");
   const [metaDataList, setMetaDataList] = useState<string[]>([]);
+
+  const [pageFields, setPageFields] = useState<IPageFields[]>([]);
+  const [filteredPages, setFilteredPages] = useState<IPageFields[]>([]);
+  const [carouselPages, setCarouselPages] = useState<IPageFields[]>([]);
+
 
   useEffect(() => {
     carouselService
       .getPages(items)
       .then((pages) => {
         const managedMetadataList: string[] = [filteredValue];
-        pages.forEach((page) => {
-          // On recupère la liste des métadonnées à utiliser pour les filtres
-          page.AVEMTheme.forEach((val) => {
-            if (managedMetadataList.indexOf(val.Label) === -1) {
-              managedMetadataList.push(val.Label);
-            }
-          });
-          // Get current page likes
-          carouselService
-            .getPageLikes(parseInt(page.Id))
-            .then((likes) => {
-              // Get current page comments
-              carouselService
-                .getPageComments(parseInt(page.Id))
-                .then((comment) => {
-                  const commentValue = comment ? comment.length.toString() : "";
+        carouselService
+          .getPagesDataAsStream()
+          .then((items) => {
+            pages.forEach((page) => {
+              // On recupère la liste des métadonnées à utiliser pour les filtres
+              page.AVEMTheme.forEach((val) => {
+                if (managedMetadataList.indexOf(val.Label) === -1) {
+                  managedMetadataList.push(val.Label);
+                }
+              });
 
-                  const pageInfo: ISliderInfos = {
+              items.Row.forEach((itm: RowFields) => {
+                if (parseInt(itm.ID) === parseInt(page.Id)) {
+                  const pageFields: IPageFields = {
                     ...page,
-                    ...likes,
-                    Comment: commentValue,
+                    _CommentCount: itm._CommentCount,
+                    _LikeCount: itm._LikeCount,
                   };
-
-                  setSlideInfos((sInfos) => {
-                    return [...sInfos, pageInfo];
+                  setPageFields((sInfos) => {
+                    return [...sInfos, pageFields];
                   });
-                  setFilteredSlids((preVal) => {
-                    return [...preVal, pageInfo];
+                  setFilteredPages((sInfos) => {
+                    return [...sInfos, pageFields];
                   });
-                })
-                .catch((error) => {
-                  Log.error("", error);
-                });
-            })
-            .catch((error) => {
-              Log.error("", error);
+                  return;
+                }
+              });
             });
-        });
-
+          })
+          .catch((error) => {
+            Log.error("", error);
+          });
+        
         setMetaDataList(managedMetadataList);
       })
       .catch((error) => {
@@ -85,22 +88,23 @@ const Carousel: FC<ICarouselProps> = (props) => {
     setFilteredValue(item);
 
     if (item === "All") {
-      setFilteredSlids(slideInfos);
+      setFilteredPages(pageFields);
     } else {
-      const filtable: ISliderInfos[] = [];
-      slideInfos.forEach((page) => {
+      const filtable: IPageFields[] = [];
+      pageFields.forEach((page) => {
+        // if (Array.isArray(page[managedPropertyField])) {
         page.AVEMTheme.forEach((depInf) => {
           if (depInf.Label === item) {
             filtable.push(page);
             return;
           }
         });
+        // }
       });
 
-      setFilteredSlids(filtable);
+      setFilteredPages(filtable);
     }
   };
-
 
   return (
     <div>
@@ -110,15 +114,15 @@ const Carousel: FC<ICarouselProps> = (props) => {
           itemPerPage={itemPerPage}
           itemToSlide={itemToSlide}
           autoPlaySpeed={autoPlaySpeed}
-          slideInfos={slideInfos}
+          slideInfos={pageFields} // slideInfos}
         />
       ) : (
         <>
           <GridList
-            items={filteredSlids}
+            items={filteredPages} // filteredSlids}
             filteredValue={filteredValue}
-              metadataList={metaDataList}
-              itemsPerPage={4}
+            metadataList={metaDataList}
+            itemsPerPage={4}
             onFilterClick={handleFilterClick}
           />
         </>

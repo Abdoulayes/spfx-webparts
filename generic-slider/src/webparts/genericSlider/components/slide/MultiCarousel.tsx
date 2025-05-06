@@ -2,23 +2,12 @@ import * as React from "react";
 import { FC } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import {
-  IPageFields,
-  // ISliderInfos
-} from "../../../../models";
 import Slide from "./Slide";
-import styles from "../Carousel.module.scss";
-
-interface IMultiCarouselProps {
-  // children: React.ReactNode;
-  itemPerPage: string;
-  itemToSlide: string;
-  autoPlaySpeed: string;
-  slideInfos: IPageFields[], // ISliderInfos[];
-}
+import styles from "../GenericSlider.module.scss";
+import { IMultiCarouselProps } from "./IMultiCarousel";
 
 const MultiCarousel: FC<IMultiCarouselProps> = (props) => {
-  const { itemPerPage, itemToSlide, autoPlaySpeed, slideInfos } =
+  const { itemPerPage, itemToSlide, autoPlaySpeed, slideInfos, itemTags } =
     props;
   const responsive = {
     desktop: {
@@ -58,7 +47,7 @@ const MultiCarousel: FC<IMultiCarouselProps> = (props) => {
               }
               target="_blanc"
             >
-              <Slide slideInfos={slideInf} />
+                    <Slide slideInfos={slideInf} itemTags={itemTags} />
             </a>
           </div>
         ))}

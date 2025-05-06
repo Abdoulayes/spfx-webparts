@@ -1,10 +1,11 @@
 import * as React from "react";
 import { FC, useState } from "react";
-import styles from "../Carousel.module.scss";
+import styles from "../GenericSlider.module.scss";
 import {
   IPageFields,
   // ISliderInfos
 } from "../../../../models";
+// import Slide from "../slide/Slide";
 import Slide from "../slide/Slide";
 import ReactPaginate from "react-paginate";
 import "./style.css";
@@ -14,6 +15,7 @@ interface IGridListProps {
   metadataList: string[];
   filteredValue: string;
   itemsPerPage: number;
+  itemTags: string;
   onFilterClick: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     item: string
@@ -21,8 +23,14 @@ interface IGridListProps {
 }
 
 const GridList: FC<IGridListProps> = (props) => {
-  const { items, metadataList, filteredValue, itemsPerPage, onFilterClick } =
-    props;
+  const {
+    items,
+    metadataList,
+    filteredValue,
+    itemsPerPage,
+    itemTags,
+    onFilterClick,
+  } = props;
 
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -30,6 +38,7 @@ const GridList: FC<IGridListProps> = (props) => {
   const currentItems = items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(items.length / itemsPerPage);
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const handlePageClick = (event: any): void => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
 
@@ -55,8 +64,11 @@ const GridList: FC<IGridListProps> = (props) => {
       <div className={styles.wrapper}>
         {currentItems.map((item) => (
           <div key={String(item.Id)}>
-            <a href={typeof item.FileRef === 'string' ? item.FileRef : '#'} target="_blanc">
-              <Slide slideInfos={item} />
+            <a
+              href={typeof item.FileRef === "string" ? item.FileRef : "#"}
+              target="_blanc"
+            >
+              <Slide slideInfos={item} itemTags={itemTags} />
             </a>
           </div>
         ))}
@@ -74,4 +86,5 @@ const GridList: FC<IGridListProps> = (props) => {
     </>
   );
 };
+
 export default GridList;

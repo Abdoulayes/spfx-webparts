@@ -12,6 +12,7 @@ declare interface ICarouselWebPartStrings {
   AppOutlookEnvironment: string;
   UnknownEnvironment: string;
   AllNews: string;
+  ManagedPropertyFieldLabel: string;
 }
 
 declare module 'CarouselWebPartStrings' {

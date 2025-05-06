@@ -13,4 +13,7 @@ export interface ICarouselProps {
   autoPlaySpeed: string;
   showTitle: boolean;
   showCarousel: boolean;
+  managedPropertyField: string;
+  gridRows: string;
+  pageContentType: string;
 }

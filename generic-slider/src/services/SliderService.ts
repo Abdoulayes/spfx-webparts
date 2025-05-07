@@ -1,16 +1,20 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { IPages, StreamDataInfo } from "../models/IPages";
+import { IPages, StreamDataInfo, TermSetFields } from "../models/IPages";
 import {
   SPHttpClient,
   SPHttpClientResponse,
   ISPHttpClientOptions,
 } from "@microsoft/sp-http";
 import { Log } from "@microsoft/sp-core-library";
+import { ITaxonomyPickerProps } from "@pnp/spfx-controls-react";
+import SPTermStorePickerService from "@pnp/spfx-controls-react/lib/services/SPTermStorePickerService";
 
 export class SliderService {
   sitePageListTitle: string;
   siteAbsoluteUrl: string;
   apiEndpointSitePages: string;
+  private _propertiesTaxonomy = {} as ITaxonomyPickerProps;
+  private _termsService: SPTermStorePickerService;
 
   constructor(private spContext: WebPartContext) {
     if (this.spContext.pageContext.list) {
@@ -59,22 +63,33 @@ export class SliderService {
     orderDirection: string,
     filterField: string,
     filterValue: string,
-    itemTags: string
+    itemTags: string,
+    itemTitle: string,
+    itemDescription: string,
+    itemImageUrl: string,
+    itemDate: string
     // ): Promise<IPages[] | undefined> {
   ): Promise<any[] | undefined> {
-    const selectQuery = `$select=Id,Title,LikesCount,FileRef,FileLeafRef,Created,Description,BannerImageUrl,${
+    const title = itemTitle ? itemTitle : "Title",
+      description = itemDescription ? itemDescription : "Description",
+      image = itemImageUrl ? `${itemImageUrl}/Url` : "BannerImageUrl",
+      expandImageUrl = itemImageUrl ? `&expand=${itemImageUrl}` : "",
+      date = itemDate ? itemDate : "Created",
+      selectQuery = `$select=Id,${title},LikesCount,FileRef,FileLeafRef,${date},${description},${image},${
         itemTags ? itemTags : ""
-      }`,
-      customFilter =
+      }${expandImageUrl}`;
+
+    const customFilter =
         filterField && filterValue ? `${filterField} eq '${filterValue}'` : "",
       filterQuery =
         customFilter === ""
           ? `$filter=ContentType eq '${pageContentType}'`
-          : `$filter=ContentType eq '${pageContentType}' and ${customFilter}`,
-      orderByQuery =
-        orderField && orderDirection
-          ? `&$orderby=${orderField} ${orderDirection}`
-          : "";
+          : `$filter=ContentType eq '${pageContentType}' and ${customFilter}`;
+
+    const orderByQuery =
+      orderField && orderDirection
+        ? `&$orderby=${orderField} ${orderDirection}`
+        : "";
     const url = `${this.siteAbsoluteUrl}/${this.apiEndpointSitePages}/items?${selectQuery}&${filterQuery}${orderByQuery}`;
 
     try {
@@ -110,5 +125,31 @@ export class SliderService {
       Log.error("", error);
       return undefined;
     }
+  }
+
+  public async getTerms(
+    termSetId: string
+  ): Promise<TermSetFields[] | undefined> {
+    this._propertiesTaxonomy.label = "select a term set";
+    this._propertiesTaxonomy.context = this.spContext;
+    this._propertiesTaxonomy.allowMultipleSelections = true;
+    this._propertiesTaxonomy.termsetNameOrID = termSetId;
+    this._propertiesTaxonomy.isTermSetSelectable = false;
+    this._propertiesTaxonomy.panelTitle = "select a term";
+    this._termsService = new SPTermStorePickerService(
+      this._propertiesTaxonomy,
+      this.spContext
+    );
+    const termSet = await this._termsService.getAllTerms(
+      termSetId,
+      false,
+      false
+    );
+    const allTerms = termSet.Terms;
+
+    return allTerms?.map((term) => ({
+      id: term.Id,
+      label: term.Name,
+    }));
   }
 }

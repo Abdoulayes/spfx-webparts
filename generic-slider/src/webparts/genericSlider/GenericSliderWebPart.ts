@@ -19,6 +19,7 @@ import SPTermStorePickerService from "@pnp/spfx-controls-react/lib/services/SPTe
 import { ITaxonomyPickerProps } from "@pnp/spfx-controls-react";
 import { TermSetFields } from "../../models";
 import { PropertyFieldMultiSelect } from "@pnp/spfx-property-controls/lib/PropertyFieldMultiSelect";
+// import { SliderService } from "../../services/SliderService";
 
 export interface IGenericSliderWebPartProps {
   wpTitle: string;
@@ -46,12 +47,14 @@ export interface IGenericSliderWebPartProps {
   ItemTags: string;
   ItemTagsTermSet: string;
   ItemTagsSelected: string[];
+  ManagedMetadataList: string[];
 }
 
 export default class GenericSliderWebPart extends BaseClientSideWebPart<IGenericSliderWebPartProps> {
   private _termsService: SPTermStorePickerService;
   private _propertiesTaxonomy = {} as ITaxonomyPickerProps;
   private _tagsDropdownOptions: IPropertyPaneDropdownOption[] = [];
+  // private _sliderService = new SliderService(this.context);
 
   public render(): void {
     const element: React.ReactElement<IGenericSliderProps> =
@@ -78,6 +81,7 @@ export default class GenericSliderWebPart extends BaseClientSideWebPart<IGeneric
         itemTagsTermSet: this.properties.ItemTagsTermSet,
         itemDate: this.properties.ItemDate,
         itemTagsSelected: this.properties.ItemTagsSelected,
+        managedMetadataList: this.properties.ManagedMetadataList,
       });
 
     ReactDom.render(element, this.domElement);
@@ -95,18 +99,26 @@ export default class GenericSliderWebPart extends BaseClientSideWebPart<IGeneric
     if (this.properties.ItemTagsTermSet) {
       this._getTerms(this.properties.ItemTagsTermSet)
         .then((terms) => {
+          const tagList: string[] = []; 
           if (terms && terms.length !== 0) {
             this._tagsDropdownOptions = terms.map((term) => ({
               // key: term.id,
               key: term.label,
               text: term.label,
             }));
+            terms.map(
+              (item) => {
+                tagList.push(item.label);
+              }
+            );
+            this.properties.ManagedMetadataList = tagList;
           }
         })
         .catch((error) => {
           console.log(error);
         });
     }
+  
 
     return super.onInit();
   }

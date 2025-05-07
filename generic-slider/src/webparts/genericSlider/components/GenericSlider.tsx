@@ -27,11 +27,12 @@ const GenericSlider: FC<IGenericSliderProps> = (props) => {
     // itemTagsTermSet,
     itemTagsSelected,
 
-    // itemTitle,
-    // itemDescription,
-    // itemImageUrl,
-    // itemDate,
+    itemTitle,
+    itemDescription,
+    itemImageUrl,
+    itemDate,
     itemTags,
+    managedMetadataList,
   } = props;
 
   const carouselService = new SliderService(spContext);
@@ -52,7 +53,11 @@ const GenericSlider: FC<IGenericSliderProps> = (props) => {
         orderDirection,
         filterField,
         filterValue,
-        itemTags
+        itemTags,
+        itemTitle,
+        itemDescription,
+        itemImageUrl,
+        itemDate
         // itemTagsSelected
       )
       .then((pages) => {
@@ -72,7 +77,7 @@ const GenericSlider: FC<IGenericSliderProps> = (props) => {
                 // On verifie si la page n'a pas déjà été ajouté à la liste
                 if (filteredPages.indexOf(page) === -1) {
                   filteredPages.push(page);
-                  return;                  
+                  return;
                 }
               }
             });
@@ -113,7 +118,10 @@ const GenericSlider: FC<IGenericSliderProps> = (props) => {
         });
 
         if (itemTagsSelected.length !== 0) {
+          // Si aucun filtre n'est pas selectionné, on affiche tous les filtres
           setMetaDataList(["All", ...itemTagsSelected]);
+          } else {
+            setMetaDataList(["All", ...managedMetadataList]);
         }
       })
       .catch((error) => {
@@ -176,6 +184,10 @@ const GenericSlider: FC<IGenericSliderProps> = (props) => {
           autoPlaySpeed={autoPlaySpeed}
           slideInfos={carouselPages}
           itemTags={itemTags}
+          itemTitle={itemTitle}
+          itemDescription={itemDescription}
+          itemImageUrl={itemImageUrl}
+          itemDate={itemDate}
         />
       ) : (
         <GridList
@@ -184,6 +196,10 @@ const GenericSlider: FC<IGenericSliderProps> = (props) => {
           metadataList={metaDataList}
           itemsPerPage={gridRows ? parseInt(gridRows) * 4 : 8}
           itemTags={itemTags}
+          itemTitle={itemTitle}
+          itemDescription={itemDescription}
+          itemImageUrl={itemImageUrl}
+          itemDate={itemDate}
           onFilterClick={handleFilterClick}
         />
       )}

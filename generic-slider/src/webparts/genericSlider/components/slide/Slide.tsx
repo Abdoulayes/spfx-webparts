@@ -5,7 +5,7 @@ import styles from "../GenericSlider.module.scss";
 import { Icon } from "@fluentui/react/lib/Icon";
 
 const Slide: FC<ISlideProps> = (props) => {
-  const { slideInfos, itemTags } = props;
+  const { slideInfos, itemTags, itemTitle, itemDescription, itemImageUrl, itemDate } = props;
   // const imageUrl = (slideInfos.BannerImageUrl && slideInfos.BannerImageUrl.Url) ? slideInfos.BannerImageUrl.Url : "";
   const imageUrl =
     slideInfos.BannerImageUrl &&
@@ -22,27 +22,34 @@ const Slide: FC<ISlideProps> = (props) => {
       ? slideInfos.BannerImageUrl.Description
       : "";
 
+    const sliderTitle = itemTitle ? slideInfos[itemTitle] : slideInfos.Title,
+      sliderDescription = itemDescription
+        ? slideInfos[itemDescription]
+        : slideInfos.Description,
+      sliderImage = itemImageUrl ? slideInfos[itemImageUrl]?.Url : imageUrl;
+    
   // const createdDate = new Date(slideInfos.Created).toLocaleDateString();
-  const createdDate =
-    typeof slideInfos.Created === "string" ||
-    typeof slideInfos.Created === "number"
-      ? new Date(slideInfos.Created).toLocaleDateString()
-      : "";
+    const sliderDate = itemDate ? itemDate : "Created",
+      createdDate =
+        typeof slideInfos[sliderDate] === "string" ||
+        typeof slideInfos[sliderDate] === "number"
+          ? new Date(slideInfos[sliderDate]).toLocaleDateString()
+          : "";
 
   return (
     <div className={styles.slider}>
       <div className={styles.sliderItem}>
         <div className={styles.sliderTop}>
           <div className={styles.sliderImgContainer}>
-            <img src={imageUrl} alt={imageDesc} />
+            <img src={sliderImage} alt={imageDesc} />
           </div>
         </div>
         <div className={styles.sliderBottom}>
           <div className={styles.sliderTitle}>
-            <span>{slideInfos.Title}</span>
+            <span>{sliderTitle}</span>
           </div>
           <div className={styles.sliderDescription}>
-            <span>{slideInfos.Description}</span>
+            <span>{sliderDescription}</span>
           </div>
           <div className={styles.sliderTags}>
             <div className={styles.tagList}>

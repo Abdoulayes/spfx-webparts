@@ -22,4 +22,5 @@ export interface IGenericSliderProps {
   itemTags: string;
   itemTagsTermSet: string;
   itemTagsSelected: string[];
+  managedMetadataList: string[];
 }

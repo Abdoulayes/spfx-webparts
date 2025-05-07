@@ -1,26 +1,10 @@
 import * as React from "react";
 import { FC, useState } from "react";
 import styles from "../GenericSlider.module.scss";
-import {
-  IPageFields,
-  // ISliderInfos
-} from "../../../../models";
-// import Slide from "../slide/Slide";
 import Slide from "../slide/Slide";
 import ReactPaginate from "react-paginate";
 import "./style.css";
-
-interface IGridListProps {
-  items: IPageFields[]; // ISliderInfos[];
-  metadataList: string[];
-  filteredValue: string;
-  itemsPerPage: number;
-  itemTags: string;
-  onFilterClick: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    item: string
-  ) => void;
-}
+import { IGridListProps } from "./IGridListProps";
 
 const GridList: FC<IGridListProps> = (props) => {
   const {
@@ -28,7 +12,11 @@ const GridList: FC<IGridListProps> = (props) => {
     metadataList,
     filteredValue,
     itemsPerPage,
-    itemTags,
+      itemTags,
+    itemTitle,
+      itemDescription,
+    itemImageUrl,
+    itemDate,
     onFilterClick,
   } = props;
 
@@ -68,7 +56,7 @@ const GridList: FC<IGridListProps> = (props) => {
               href={typeof item.FileRef === "string" ? item.FileRef : "#"}
               target="_blanc"
             >
-              <Slide slideInfos={item} itemTags={itemTags} />
+              <Slide slideInfos={item} itemTags={itemTags} itemTitle={itemTitle} itemDescription={itemDescription} itemImageUrl={itemImageUrl} itemDate={itemDate} />
             </a>
           </div>
         ))}

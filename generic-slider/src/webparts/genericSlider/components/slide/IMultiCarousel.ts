@@ -10,4 +10,8 @@ export interface IMultiCarouselProps {
   autoPlaySpeed: string;
     slideInfos: IPageFields[]; // ISliderInfos[];
     itemTags: string;
+    itemTitle: string;
+    itemDescription: string;
+    itemImageUrl: string;
+    itemDate: string;
 }

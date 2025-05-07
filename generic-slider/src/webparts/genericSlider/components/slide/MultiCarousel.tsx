@@ -7,7 +7,7 @@ import styles from "../GenericSlider.module.scss";
 import { IMultiCarouselProps } from "./IMultiCarousel";
 
 const MultiCarousel: FC<IMultiCarouselProps> = (props) => {
-  const { itemPerPage, itemToSlide, autoPlaySpeed, slideInfos, itemTags } =
+  const { itemPerPage, itemToSlide, autoPlaySpeed, slideInfos, itemTags, itemTitle, itemDescription, itemImageUrl, itemDate } =
     props;
   const responsive = {
     desktop: {
@@ -47,7 +47,7 @@ const MultiCarousel: FC<IMultiCarouselProps> = (props) => {
               }
               target="_blanc"
             >
-                    <Slide slideInfos={slideInf} itemTags={itemTags} />
+                    <Slide slideInfos={slideInf} itemTags={itemTags} itemTitle={itemTitle} itemDescription={itemDescription} itemImageUrl={itemImageUrl} itemDate={itemDate} />
             </a>
           </div>
         ))}

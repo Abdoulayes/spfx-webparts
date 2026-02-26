@@ -14,7 +14,7 @@ export default function NewGoal({ onSubmit }: INewGoalProps): JSX.Element {
     const enteredDesc = goalDescription.current?.value;
     if (!enteredDesc || !goalTitle) {
       setErrorMsg(
-        "You have to enter goal title and description befor submit it!"
+        "You have to enter goal title and description before submitting it!"
       );
     } else {
       onSubmit(goalTitle, enteredDesc);

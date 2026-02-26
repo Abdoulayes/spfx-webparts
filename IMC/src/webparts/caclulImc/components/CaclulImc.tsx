@@ -55,7 +55,7 @@ const CaclulImc: FC<ICaclulImcProps> = () => {
   }
   function handleError() {
     setImcValues(preValue => {
-      return { ...preValue, result: 'Woops!', info: 'Veuillez renseigner une valeur supéreieur à Zero. ' }
+      return { ...preValue, result: 'Woops!', info: 'Veuillez renseigner une valeur supérieure à Zero. ' }
     });
   }
   function calculateIMC() {
@@ -93,7 +93,7 @@ const CaclulImc: FC<ICaclulImcProps> = () => {
         <form onSubmit={handleSubmit}>
           <div className={styles.inputContainer}>
             <div className={styles.inputGroup}>
-              <label htmlFor="height">Votre taille en centimère</label>
+              <label htmlFor="height">Votre taille en centimètre</label>
               <input
                 type="number"
                 name="height"
@@ -115,7 +115,7 @@ const CaclulImc: FC<ICaclulImcProps> = () => {
               />
             </div>
           </div>
-          <button>Cacluler un IMC</button>
+          <button>Calculer un IMC</button>
         </form>
 
         <div className={styles.infos}>
